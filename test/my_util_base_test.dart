@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:my_util/my_util.dart';
+import 'package:my_util_base/my_util_base.dart';
 
 void main() {
   test('adds one to input values', () {

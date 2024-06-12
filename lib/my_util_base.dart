@@ -1,4 +1,4 @@
-library my_util;
+library my_utils;
 
 /// A Calculator.
 class Calculator {

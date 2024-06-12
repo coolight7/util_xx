@@ -1,8 +1,7 @@
-name: my_util
+name: my_util_base
 description: "节流、防抖、重复触发、限制单次触发、流"
 version: 0.1.0
 homepage: https://github.com/coolight7/my_util
-publish_to: "https://pub.dartlang.org"
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
