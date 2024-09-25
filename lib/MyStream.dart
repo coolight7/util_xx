@@ -4,9 +4,13 @@ import 'MyLogger.dart';
 
 class MyStream_c<T> {
   int _useId = 1;
-  final List<MyStreamListener_c<T>> _listeners;
-  T _value;
 
+  /// 是否接收过值
+  bool _hasNotify = false;
+  T _value;
+  final List<MyStreamListener_c<T>> _listeners;
+
+  bool get hasNotify => _hasNotify;
   T get value => _value;
   set value(in_value) => notify(in_value);
 
@@ -74,6 +78,7 @@ class MyStream_c<T> {
     T in_value, {
     final bool? in_modify,
   }) {
+    _hasNotify = true;
     late final bool? f_modify;
     if (null != in_modify) {
       f_modify = in_modify;
@@ -108,6 +113,7 @@ class MyStream_c<T> {
 
   /// 发送通知，但值仍为本身
   void reflush() {
+    _hasNotify = true;
     for (int i = 0; i < _listeners.length; ++i) {
       final item = _listeners[i];
       try {
