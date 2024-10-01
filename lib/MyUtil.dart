@@ -25,8 +25,8 @@
 */
 
 import 'dart:math' as math;
-
 import 'package:flutter/widgets.dart';
+export 'MyPlatform.dart';
 
 /// 套娃类，用于包裹某元素，方便进行类似c++引用传递修改
 class MyObj_c<T> {
