@@ -233,7 +233,6 @@ class MyParse_c {
         if (seconds.isNotEmpty) {
           restr += "$seconds秒";
         }
-        break;
       case MySeparatorType_e.Symbol:
         if (hours.isNotEmpty) {
           restr += hours;
@@ -250,9 +249,12 @@ class MyParse_c {
           }
           restr += seconds;
         }
-        break;
     }
     return restr;
+  }
+
+  static String formatTimeToStr(DateTime time) {
+    return "${time.hour..toString().padLeft(2, '0')}:${time.minute..toString().padLeft(2, '0')}:${time.second..toString().padLeft(2, '0')}";
   }
 
   static String formatNumStr(int num) {

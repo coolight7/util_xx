@@ -1,3 +1,5 @@
+## 0.1.4
+- 添加 formatTimeToStr
 ## 0.1.3
 - fix import
 ## 0.1.2
