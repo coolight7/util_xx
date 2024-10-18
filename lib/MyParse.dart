@@ -217,6 +217,7 @@ class MyParse_c {
         if (mm > 0) {
           minutes = mm.toString();
         }
+        break;
       case MyFormatDurationType_e.MMSS:
         minutes = duration.inMinutes.toString().padLeft(2, '0');
         seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
@@ -233,6 +234,7 @@ class MyParse_c {
         if (seconds.isNotEmpty) {
           restr += "$seconds秒";
         }
+        break;
       case MySeparatorType_e.Symbol:
         if (hours.isNotEmpty) {
           restr += hours;

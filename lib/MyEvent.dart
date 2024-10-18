@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:collection';
 import 'package:flutter/foundation.dart';
+import 'package:my_util_base/MyUtil.dart';
 import 'MyLogger.dart';
 import 'MyStream.dart';
 
@@ -366,11 +367,13 @@ class MyEventQueue_c<T, T1> {
   /// * 用于控制异步函数不会并发执行
   MyEventQueue_c();
 
-  void completeWhere((bool, T?) Function(MyEventQueueItem_c<T, T1> item) fun) {
+  void completeWhere(
+      bool Function(MyEventQueueItem_c<T, T1> item, MyObj_c<T?> result) fun) {
     list.removeWhere((item) {
-      final (doComplete, result) = fun.call(item);
+      final result = MyObj_c<T?>(null);
+      final doComplete = fun.call(item, result);
       if (doComplete) {
-        item.result.complete(result);
+        item.result.complete(result.value);
         return true;
       }
       return false;
