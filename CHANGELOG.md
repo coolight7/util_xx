@@ -1,3 +1,5 @@
+## 0.2.1
+- util_xx.dart 提供更多导出
 ## 0.2.0
 - 重命名
 - Stream.reflush 添加参数 {bool hasModify = false}
