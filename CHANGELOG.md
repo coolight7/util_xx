@@ -1,3 +1,6 @@
+## 0.2.0
+- 重命名
+- Stream.reflush 添加参数 {bool hasModify = false}
 ## 0.1.4
 - 添加 formatTimeToStr
 ## 0.1.3

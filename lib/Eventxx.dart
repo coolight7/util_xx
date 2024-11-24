@@ -3,10 +3,10 @@
 import 'dart:async';
 import 'dart:collection';
 import 'package:flutter/foundation.dart';
-import 'MyLogger.dart';
-import 'MyStream.dart';
+import 'Loggerxx.dart';
+import 'Streamxx.dart';
 
-abstract class MyEventBase_c<T> {
+abstract class EventxxBase_c<T> {
   void notify(T in_value);
   @Deprecated(
     "需要实现该函数，但不要直接调用，应当调用[_onListenRun]，由[_onListenRun]来调用[_onListenBind]",
@@ -17,7 +17,7 @@ abstract class MyEventBase_c<T> {
       // ignore: deprecated_member_use_from_same_package
       _onListenBind(in_value);
     } catch (e) {
-      MyLogger.to().severe(MyLogItem(
+      Loggerxx.to().severe(LogxxItem(
         prefix: "MyEvent.run Error",
         msg: [e.toString()],
       ));
@@ -25,7 +25,7 @@ abstract class MyEventBase_c<T> {
   }
 }
 
-class MyEventControl_c {
+class EventxxControl_c {
   /// * 检查[future]的执行是否超时
   /// 该函数只会在[future]完成后才会调用[onDone]并返回结果
   /// * 注意，部分阻塞会导致[startTime]和[endTime]在[future]一段时间后返回后仍然相等，
@@ -49,7 +49,7 @@ class MyEventControl_c {
   }
 }
 
-class MyEventDebounce_c<T> extends MyEventBase_c<T> {
+class EventxxDebounce_c<T> extends EventxxBase_c<T> {
   late T _value;
 
   T get value => _value;
@@ -66,14 +66,14 @@ class MyEventDebounce_c<T> extends MyEventBase_c<T> {
 
   /// ## 防抖
   /// * 限制在 [time] 时间内没有新收到新数据后触发执行一次 [onListen]
-  MyEventDebounce_c({
+  EventxxDebounce_c({
     required this.time,
     required this.onListen,
     this.fastFirstRun = false,
   });
 
-  MyEventDebounce_c.fromMyStream({
-    required MyStream_c<T> stream,
+  EventxxDebounce_c.fromMyStream({
+    required Streamxx_c<T> stream,
     required this.time,
     required this.onListen,
     this.fastFirstRun = false,
@@ -115,20 +115,20 @@ class MyEventDebounce_c<T> extends MyEventBase_c<T> {
   }
 }
 
-class MyEventDebounceThrottle_c<T> extends MyEventThrottle_c<T> {
-  late final MyEventDebounce_c<T> debounce;
+class EventxxDebounceThrottle_c<T> extends EventxxThrottle_c<T> {
+  late final EventxxDebounce_c<T> debounce;
 
   /// ## 节流版防抖
   /// * 当[debounceTime]时间内没有新通知[notify]后，才会触发[onListen]
   /// * 并且限制调用[notify]的频率在[time]时间内只会触发一次
-  MyEventDebounceThrottle_c({
+  EventxxDebounceThrottle_c({
     required Duration debounceTime,
     required super.time,
     required super.onListen,
     required void Function(T) onDebounceListen,
     super.fastFirstRun = true,
   }) {
-    debounce = MyEventDebounce_c(
+    debounce = EventxxDebounce_c(
       fastFirstRun: false,
       time: debounceTime,
       onListen: onDebounceListen,
@@ -142,7 +142,7 @@ class MyEventDebounceThrottle_c<T> extends MyEventThrottle_c<T> {
   }
 }
 
-class MyEventThrottle_c<T> extends MyEventBase_c<T> {
+class EventxxThrottle_c<T> extends EventxxBase_c<T> {
   bool _hasValue = false;
   late T _value;
 
@@ -166,7 +166,7 @@ class MyEventThrottle_c<T> extends MyEventBase_c<T> {
   /// 都将被丢弃。
   /// * [fastFirstRun] 若为[true]，当未限流时得到通知马上触发[onListen], 之后限制期间的[_value]都会
   /// 被丢弃；若启用[dofastFirstRunEnd]，则保留最后一个[_value]在限制结束时触发[onListen]，而后再次进入限流。
-  MyEventThrottle_c({
+  EventxxThrottle_c({
     required this.time,
     required this.onListen,
     this.fastFirstRun = false,
@@ -222,7 +222,7 @@ class MyEventThrottle_c<T> extends MyEventBase_c<T> {
   }
 }
 
-class MyEventRepeat_c {
+class EventxxRepeat_c {
   /// 通知一次后的记录时长
   final Duration duration;
   final int repeatLimitNum;
@@ -240,7 +240,7 @@ class MyEventRepeat_c {
 
   /// ## 重复时触发
   /// * 仅当一段时间[duration]内重复通知多次达到[repeatLimitNum]时才会触发执行[onListen]
-  MyEventRepeat_c({
+  EventxxRepeat_c({
     this.repeatLimitNum = 2,
     required this.duration,
     required this.onListen,
@@ -266,7 +266,7 @@ class MyEventRepeat_c {
   }
 }
 
-class MyEventOnce_c {
+class EventxxOnce_c {
   final void Function()? onListen;
 
   /// 记录是否执行过
@@ -275,7 +275,7 @@ class MyEventOnce_c {
   bool get hasRun => _hasRun;
 
   /// 只会执行一次[onListen]
-  MyEventOnce_c({
+  EventxxOnce_c({
     required this.onListen,
   });
 
@@ -294,7 +294,7 @@ class MyEventOnce_c {
   }
 }
 
-class MyEventLine_c<T> {
+class EventxxLine_c<T> {
   final list = Queue<T>();
 
   /// 当任务来临时执行的操作
@@ -308,7 +308,7 @@ class MyEventLine_c<T> {
   bool get isRunning => _isRunning;
 
   /// ## 线性任务队列
-  MyEventLine_c({
+  EventxxLine_c({
     required this.onListen,
   });
 
@@ -344,19 +344,19 @@ class MyEventLine_c<T> {
   }
 }
 
-class MyEventQueueItem_c<T, T1> {
+class EventxxQueueItem_c<T, T1> {
   final T1? value;
   final Future<T?> Function(T1? value) fun;
   final Completer<T?> result = Completer<T?>();
 
-  MyEventQueueItem_c({
+  EventxxQueueItem_c({
     this.value,
     required this.fun,
   });
 }
 
-class MyEventQueue_c<T, T1> {
-  final list = Queue<MyEventQueueItem_c<T, T1>>();
+class EventxxQueue_c<T, T1> {
+  final list = Queue<EventxxQueueItem_c<T, T1>>();
 
   /// 标记是否正在执行
   bool _isRunning = false;
@@ -364,9 +364,9 @@ class MyEventQueue_c<T, T1> {
 
   /// ## 线性任务队列
   /// * 用于控制异步函数不会并发执行
-  MyEventQueue_c();
+  EventxxQueue_c();
 
-  void completeWhere((bool, T?) Function(MyEventQueueItem_c<T, T1> item) fun) {
+  void completeWhere((bool, T?) Function(EventxxQueueItem_c<T, T1> item) fun) {
     list.removeWhere((item) {
       final (doComplete, result) = fun.call(item);
       if (doComplete) {
@@ -404,11 +404,11 @@ class MyEventQueue_c<T, T1> {
   }
 
   /// 返回触发执行后的结果
-  Future<T?> notify(MyEventQueueItem_c<T, T1> item) {
+  Future<T?> notify(EventxxQueueItem_c<T, T1> item) {
     list.add(item);
     onRunEvent();
     return item.result.future;
   }
 }
 
-class MyEventAvailable_c<ValueType, CheckType> {}
+class EventxxAvailable_c<ValueType, CheckType> {}

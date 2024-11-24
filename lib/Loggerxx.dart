@@ -4,18 +4,18 @@ import 'dart:convert' as convert;
 import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 
-class MyLogger {
-  static final _instance = MyLogger(className: "Global");
+class Loggerxx {
+  static final _instance = Loggerxx(className: "Global");
 
   final Logger _log;
   final String className;
 
-  MyLogger({
+  Loggerxx({
     required this.className,
   }) : _log = Logger(className);
 
   /// 获得全局通用单例
-  static MyLogger to() => _instance;
+  static Loggerxx to() => _instance;
 
   /// * 如果希望输出日志，需要调用一次`MyLogger.enableDebugPrint()`
   /// * 当然也可以自己通过[listenLog]监听处理日志
@@ -29,54 +29,54 @@ class MyLogger {
   }
 
   /// * 监听并自定义处理收到的日志
-  /// * 多个不同的[MyLogger]收集到的日志都会汇集于此
+  /// * 多个不同的[Loggerxx]收集到的日志都会汇集于此
   static void listenLog(void Function(LogRecord)? onLog) {
     Logger.root.onRecord.listen(onLog);
   }
 
-  void shout(MyLogItem msg) {
+  void shout(LogxxItem msg) {
     _log.shout(convert.jsonEncode(msg));
   }
 
-  void severe(MyLogItem msg) {
+  void severe(LogxxItem msg) {
     _log.severe(convert.jsonEncode(msg));
   }
 
-  void warning(MyLogItem msg) {
+  void warning(LogxxItem msg) {
     _log.warning(convert.jsonEncode(msg));
   }
 
-  void info(MyLogItem msg) {
+  void info(LogxxItem msg) {
     _log.info(convert.jsonEncode(msg));
   }
 
-  void config(MyLogItem msg) {
+  void config(LogxxItem msg) {
     _log.config(convert.jsonEncode(msg));
   }
 
-  void fine(MyLogItem msg) {
+  void fine(LogxxItem msg) {
     _log.fine(convert.jsonEncode(msg));
   }
 
-  void finer(MyLogItem msg) {
+  void finer(LogxxItem msg) {
     _log.finer(convert.jsonEncode(msg));
   }
 
-  void finest(MyLogItem msg) {
+  void finest(LogxxItem msg) {
     _log.finest(convert.jsonEncode(msg));
   }
 }
 
-class MyLogItem {
+class LogxxItem {
   final String? prefix;
   final List<String>? msg;
 
-  MyLogItem({
+  LogxxItem({
     this.prefix,
     this.msg,
   });
 
-  factory MyLogItem.fromJson(Map<String, dynamic> json) {
+  factory LogxxItem.fromJson(Map<String, dynamic> json) {
     final List? list = json["msg"];
     List<String>? msgs;
     if (null != list) {
@@ -85,15 +85,15 @@ class MyLogItem {
         msgs.add(list[i].toString());
       }
     }
-    return MyLogItem(
+    return LogxxItem(
       prefix: json["prefix"],
       msg: msgs,
     );
   }
 
-  factory MyLogItem.fromJsonStr(String json) {
+  factory LogxxItem.fromJsonStr(String json) {
     try {
-      return MyLogItem.fromJson(convert.jsonDecode(json));
+      return LogxxItem.fromJson(convert.jsonDecode(json));
     } catch (e) {
       // 由于是日志结构本身的错误，解析失败直接输出即可，
       // 仍写回日志可能导致滚雪球
@@ -102,7 +102,7 @@ class MyLogItem {
         print(e.toString());
         print(json);
       }
-      return MyLogItem(msg: [json]);
+      return LogxxItem(msg: [json]);
     }
   }
 
@@ -120,7 +120,7 @@ class MyLogItem {
   }
 }
 
-class MyLogRecord {
+class LogxxRecord {
   final Level level;
   final String message;
 
@@ -133,9 +133,9 @@ class MyLogRecord {
   /// Unique sequence number greater than all log records created before it.
   final int sequenceNumber;
 
-  final MyLogItem content;
+  final LogxxItem content;
 
-  MyLogRecord({
+  LogxxRecord({
     required this.level,
     required this.message,
     required this.time,
@@ -159,7 +159,7 @@ class MyLogRecord {
     required Level level,
     required String? message,
     required DateTime time,
-    required MyLogItem? content,
+    required LogxxItem? content,
     String loggerName = "",
     int sequenceNumber = -1,
   }) {
@@ -176,20 +176,20 @@ class MyLogRecord {
     return convert.jsonEncode(remap);
   }
 
-  factory MyLogRecord.fromJson(Map<String, dynamic> json) {
-    return MyLogRecord(
+  factory LogxxRecord.fromJson(Map<String, dynamic> json) {
+    return LogxxRecord(
       level: Level(json["levelName"] ?? "", json["levelValue"] ?? -777),
       message: json["message"] ?? "",
       time: DateTime.fromMillisecondsSinceEpoch(json["time"] ?? 0),
-      content: MyLogItem.fromJsonStr(json["content"] ?? ""),
+      content: LogxxItem.fromJsonStr(json["content"] ?? ""),
       loggerName: json["loggerName"] ?? "",
       sequenceNumber: json["sequenceNumber"] ?? -1,
     );
   }
 
-  factory MyLogRecord.fromJsonStr(String json) {
+  factory LogxxRecord.fromJsonStr(String json) {
     try {
-      return MyLogRecord.fromJson(convert.jsonDecode(json));
+      return LogxxRecord.fromJson(convert.jsonDecode(json));
     } catch (e) {
       // 由于是日志结构本身的错误，解析失败直接输出即可，
       // 仍写回日志可能导致滚雪球
@@ -198,11 +198,11 @@ class MyLogRecord {
         print(e.toString());
         print(json);
       }
-      return MyLogRecord(
+      return LogxxRecord(
         level: const Level("", -777),
         message: json,
         time: DateTime.fromMillisecondsSinceEpoch(0),
-        content: MyLogItem(),
+        content: LogxxItem(),
       );
     }
   }

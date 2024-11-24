@@ -1,14 +1,14 @@
 // ignore_for_file: camel_case_types, constant_identifier_names, file_names, non_constant_identifier_names
 
-import 'MyLogger.dart';
+import 'Loggerxx.dart';
 
-class MyStream_c<T> {
+class Streamxx_c<T> {
   int _useId = 1;
 
   /// 是否接收过值
   bool _hasNotify = false;
   T _value;
-  final List<MyStreamListener_c<T>> _listeners;
+  final List<StreamxxListener_c<T>> _listeners;
 
   bool get hasNotify => _hasNotify;
   T get value => _value;
@@ -18,20 +18,20 @@ class MyStream_c<T> {
 
   /// * [value] 初始值
   /// * [listeners]
-  MyStream_c({
+  Streamxx_c({
     required T value,
     this.checkModify = false,
-    List<MyStreamListener_c<T>>? listeners,
+    List<StreamxxListener_c<T>>? listeners,
   })  : _value = value,
-        _listeners = listeners ?? <MyStreamListener_c<T>>[];
+        _listeners = listeners ?? <StreamxxListener_c<T>>[];
 
-  MyStream_c.listener({
+  Streamxx_c.listener({
     required T value,
     this.checkModify = false,
-    List<MyStreamListener_c<T>>? listeners,
+    List<StreamxxListener_c<T>>? listeners,
     List<void Function(T data, bool? hasModify)>? onActiveFunList,
   })  : _value = value,
-        _listeners = listeners ?? <MyStreamListener_c<T>>[] {
+        _listeners = listeners ?? <StreamxxListener_c<T>>[] {
     if (null != onActiveFunList) {
       // 创建监听器
       for (final item in onActiveFunList) {
@@ -40,12 +40,12 @@ class MyStream_c<T> {
     }
   }
 
-  MyStreamListener_c<T> addListener(
+  StreamxxListener_c<T> addListener(
     void Function(T value, bool? hasModify) onActive, {
     bool Function(T oldData, T newData)? hasModify,
     bool onlyNotifyWhenModify = true,
   }) {
-    final item = MyStreamListener_c<T>(
+    final item = StreamxxListener_c<T>(
       id: _useId++,
       onActive: onActive,
       hasModify: hasModify,
@@ -56,7 +56,7 @@ class MyStream_c<T> {
     return item;
   }
 
-  bool removeListener(MyStreamListener_c? item) {
+  bool removeListener(StreamxxListener_c? item) {
     if (null == item) {
       return false;
     }
@@ -103,7 +103,7 @@ class MyStream_c<T> {
           itemNotify,
         );
       } catch (e) {
-        MyLogger.to().severe(MyLogItem(
+        Loggerxx.to().severe(LogxxItem(
           prefix: "MyStream.notify Error",
           msg: [e.toString()],
         ));
@@ -112,17 +112,17 @@ class MyStream_c<T> {
   }
 
   /// 发送通知，但值仍为本身
-  void reflush() {
+  void reflush({bool hasModify = false}) {
     _hasNotify = true;
     for (int i = 0; i < _listeners.length; ++i) {
       final item = _listeners[i];
       try {
         item.onActive(
           _value,
-          false,
+          hasModify,
         );
       } catch (e) {
-        MyLogger.to().severe(MyLogItem(
+        Loggerxx.to().severe(LogxxItem(
           prefix: "MyStream.notify Error",
           msg: [e.toString()],
         ));
@@ -131,17 +131,17 @@ class MyStream_c<T> {
   }
 }
 
-class MyStreamListener_c<T> {
+class StreamxxListener_c<T> {
   final int id;
   final void Function(T data, bool? hasModify) onActive;
   final bool Function(T oldData, T newData)? hasModify;
 
   /// 指定仅当状态改变时才通知
-  /// * 这需要同时指定[MyStream_c.checkModify]或给定[hasModify]
+  /// * 这需要同时指定[Streamxx_c.checkModify]或给定[hasModify]
   final bool onlyNotifyWhenModify;
-  MyStream_c? stream;
+  Streamxx_c? stream;
 
-  MyStreamListener_c({
+  StreamxxListener_c({
     required this.id,
     required this.onActive,
     required this.hasModify,

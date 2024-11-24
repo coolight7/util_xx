@@ -26,12 +26,12 @@
 
 import 'dart:math' as math;
 import 'package:flutter/widgets.dart';
-export 'MyPlatform.dart';
+export 'Platformxx.dart';
 
 /// 套娃类，用于包裹某元素，方便进行类似c++引用传递修改
-class MyObj_c<T> {
+class Objxx_c<T> {
   T value;
-  MyObj_c(this.value);
+  Objxx_c(this.value);
 
   static T1? autoFromJson<T1>(
     dynamic json,
@@ -63,7 +63,7 @@ class MyObj_c<T> {
   }
 }
 
-class MyUtil_c {
+class Utilxx_c {
   static final random = math.Random();
 
   static void defEmptyFunction_0() {}

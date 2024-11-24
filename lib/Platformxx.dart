@@ -1,8 +1,8 @@
 import 'dart:io';
 
 /// 系统平台
-class MyPlatform_c {
-  MyPlatform_c._();
+class Platformxx_c {
+  Platformxx_c._();
 
   static const bool isWeb = false;
 
@@ -33,18 +33,18 @@ class MyPlatform_c {
       MacosStr = "macos";
 
   static final String currentPlatformName = () {
-    if (MyPlatform_c.isWeb) {
-      return MyPlatform_c.WebStr;
-    } else if (MyPlatform_c.isAndroid) {
-      return MyPlatform_c.AndroidStr;
-    } else if (MyPlatform_c.isIOS) {
-      return MyPlatform_c.IosStr;
-    } else if (MyPlatform_c.isWindows) {
-      return MyPlatform_c.WindowsStr;
-    } else if (MyPlatform_c.isLinux) {
-      return MyPlatform_c.LinuxStr;
-    } else if (MyPlatform_c.isMacOS) {
-      return MyPlatform_c.MacosStr;
+    if (Platformxx_c.isWeb) {
+      return Platformxx_c.WebStr;
+    } else if (Platformxx_c.isAndroid) {
+      return Platformxx_c.AndroidStr;
+    } else if (Platformxx_c.isIOS) {
+      return Platformxx_c.IosStr;
+    } else if (Platformxx_c.isWindows) {
+      return Platformxx_c.WindowsStr;
+    } else if (Platformxx_c.isLinux) {
+      return Platformxx_c.LinuxStr;
+    } else if (Platformxx_c.isMacOS) {
+      return Platformxx_c.MacosStr;
     } else {
       // 错误
       return "";
@@ -52,17 +52,17 @@ class MyPlatform_c {
   }();
 
   static final String currentPlatformName_CN = () {
-    if (MyPlatform_c.isWeb) {
+    if (Platformxx_c.isWeb) {
       return "Web";
-    } else if (MyPlatform_c.isAndroid) {
+    } else if (Platformxx_c.isAndroid) {
       return "安卓";
-    } else if (MyPlatform_c.isIOS) {
+    } else if (Platformxx_c.isIOS) {
       return "IPhone";
-    } else if (MyPlatform_c.isWindows) {
+    } else if (Platformxx_c.isWindows) {
       return "Windows";
-    } else if (MyPlatform_c.isLinux) {
+    } else if (Platformxx_c.isLinux) {
       return "Linux";
-    } else if (MyPlatform_c.isMacOS) {
+    } else if (Platformxx_c.isMacOS) {
       return "Mac";
     } else {
       // 错误

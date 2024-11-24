@@ -4,9 +4,9 @@ import "dart:convert" as convert;
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
-import 'MyLogger.dart';
+import 'Loggerxx.dart';
 
-enum MyFormatDurationType_e {
+enum FormatxxDurationType_e {
   /// [HH:]MM:SS
   hhMMSS,
 
@@ -22,7 +22,7 @@ enum MyFormatDurationType_e {
   MMSS,
 }
 
-enum MySeparatorType_e {
+enum SeparatorxxType_e {
   /// 文字
   Char,
 
@@ -30,8 +30,8 @@ enum MySeparatorType_e {
   Symbol,
 }
 
-class MyParse_c {
-  MyParse_c._();
+class Parsexx_c {
+  Parsexx_c._();
 
   // 将List<dy> 转List<int>
   static List<int> parseListDynamicToInt(List<dynamic> in_list) {
@@ -77,9 +77,9 @@ class MyParse_c {
 
   static List<int>? tryParseStringToListInt(String data) {
     try {
-      return MyParse_c.parseListDynamicToInt(convert.jsonDecode(data));
+      return Parsexx_c.parseListDynamicToInt(convert.jsonDecode(data));
     } catch (e) {
-      MyLogger.to().severe(MyLogItem(
+      Loggerxx.to().severe(LogxxItem(
         prefix: "json 解析错误",
         msg: [e.toString(), data],
       ));
@@ -171,8 +171,8 @@ class MyParse_c {
 
   static String? tryFormatDurationToStr(
     Duration? duration, {
-    MyFormatDurationType_e type = MyFormatDurationType_e.hhMMSS,
-    MySeparatorType_e separator = MySeparatorType_e.Symbol,
+    FormatxxDurationType_e type = FormatxxDurationType_e.hhMMSS,
+    SeparatorxxType_e separator = SeparatorxxType_e.Symbol,
   }) {
     if (null == duration) {
       return null;
@@ -188,28 +188,28 @@ class MyParse_c {
   ///
   static String formatDurationToStr(
     Duration duration, {
-    MyFormatDurationType_e type = MyFormatDurationType_e.hhMMSS,
-    MySeparatorType_e separator = MySeparatorType_e.Symbol,
+    FormatxxDurationType_e type = FormatxxDurationType_e.hhMMSS,
+    SeparatorxxType_e separator = SeparatorxxType_e.Symbol,
   }) {
     String hours = "", minutes = "", seconds = "";
     switch (type) {
-      case MyFormatDurationType_e.hhMMSS:
+      case FormatxxDurationType_e.hhMMSS:
         if (duration.inHours > 0) {
           hours = duration.inHours.toString().padLeft(0, '2');
         }
         minutes = duration.inMinutes.remainder(60).toString().padLeft(2, '0');
         seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
         break;
-      case MyFormatDurationType_e.HHMMSS:
+      case FormatxxDurationType_e.HHMMSS:
         hours = duration.inHours.toString().padLeft(2, '0');
         minutes = duration.inMinutes.remainder(60).toString().padLeft(2, '0');
         seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
         break;
-      case MyFormatDurationType_e.HHMM:
+      case FormatxxDurationType_e.HHMM:
         hours = duration.inHours.toString().padLeft(2, '0');
         minutes = duration.inMinutes.remainder(60).toString().padLeft(2, '0');
         break;
-      case MyFormatDurationType_e.AutoHM:
+      case FormatxxDurationType_e.AutoHM:
         if (duration.inHours > 0) {
           hours = duration.inHours.toString();
         }
@@ -217,13 +217,13 @@ class MyParse_c {
         if (mm > 0) {
           minutes = mm.toString();
         }
-      case MyFormatDurationType_e.MMSS:
+      case FormatxxDurationType_e.MMSS:
         minutes = duration.inMinutes.toString().padLeft(2, '0');
         seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
     }
     String restr = "";
     switch (separator) {
-      case MySeparatorType_e.Char:
+      case SeparatorxxType_e.Char:
         if (hours.isNotEmpty) {
           restr += "$hours小时";
         }
@@ -233,7 +233,7 @@ class MyParse_c {
         if (seconds.isNotEmpty) {
           restr += "$seconds秒";
         }
-      case MySeparatorType_e.Symbol:
+      case SeparatorxxType_e.Symbol:
         if (hours.isNotEmpty) {
           restr += hours;
         }
