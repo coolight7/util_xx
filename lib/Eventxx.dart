@@ -2,7 +2,8 @@
 
 import 'dart:async';
 import 'dart:collection';
-import 'package:flutter/foundation.dart';
+import 'package:util_xx/Platformxx.dart';
+
 import 'Loggerxx.dart';
 import 'Streamxx.dart';
 
@@ -329,7 +330,7 @@ class EventxxLine_c<T> {
         }
       }
     } catch (e) {
-      if (kDebugMode) {
+      if (Platformxx_c.isDebugMode) {
         print(e);
       }
     }
@@ -392,7 +393,7 @@ class EventxxQueue_c<T, T1> {
         }
       } catch (e) {
         item.result.complete(null);
-        if (kDebugMode) {
+        if (Platformxx_c.isDebugMode) {
           print(e);
         }
       }

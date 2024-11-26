@@ -4,6 +4,7 @@ import 'dart:io';
 class Platformxx_c {
   Platformxx_c._();
 
+  static bool isDebugMode = false;
   static const bool isWeb = false;
 
   @pragma("vm:platform-const")

@@ -1,3 +1,5 @@
+## 0.2.2
+- 剥离 flutter 依赖，迁移 flutter 相关功能到 `fluttter_util_xx`
 ## 0.2.1
 - util_xx.dart 提供更多导出
 ## 0.2.0

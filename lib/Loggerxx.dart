@@ -1,8 +1,9 @@
 // ignore_for_file: file_names, camel_case_types, constant_identifier_names
 
 import 'dart:convert' as convert;
-import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
+
+import 'Platformxx.dart';
 
 class Loggerxx {
   static final _instance = Loggerxx(className: "Global");
@@ -20,7 +21,7 @@ class Loggerxx {
   /// * 如果希望输出日志，需要调用一次`MyLogger.enableDebugPrint()`
   /// * 当然也可以自己通过[listenLog]监听处理日志
   static void enableDebugPrint() {
-    if (kDebugMode) {
+    if (Platformxx_c.isDebugMode) {
       listenLog((item) {
         // ignore: avoid_print
         print(item.toString());
@@ -97,7 +98,7 @@ class LogxxItem {
     } catch (e) {
       // 由于是日志结构本身的错误，解析失败直接输出即可，
       // 仍写回日志可能导致滚雪球
-      if (kDebugMode) {
+      if (Platformxx_c.isDebugMode) {
         print("json解析错误");
         print(e.toString());
         print(json);
@@ -193,7 +194,7 @@ class LogxxRecord {
     } catch (e) {
       // 由于是日志结构本身的错误，解析失败直接输出即可，
       // 仍写回日志可能导致滚雪球
-      if (kDebugMode) {
+      if (Platformxx_c.isDebugMode) {
         print("json解析错误");
         print(e.toString());
         print(json);
