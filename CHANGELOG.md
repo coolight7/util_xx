@@ -1,3 +1,5 @@
+## 0.2.3
+- 减少日志打印量
 ## 0.2.2
 - 剥离 flutter 依赖，迁移 flutter 相关功能到 `fluttter_util_xx`
 ## 0.2.1

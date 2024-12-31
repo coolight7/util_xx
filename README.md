@@ -1,2 +1,6 @@
 # util_xx
-* 拟声 dart 基础工具库
+- flutter/dart 的一些基础工具库
+
+# 关于
+- 这个包来源于[拟声](https://github.com/coolight7/MimicryMusic)的开发
+

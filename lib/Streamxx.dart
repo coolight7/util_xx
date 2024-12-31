@@ -72,6 +72,15 @@ class Streamxx_c<T> {
     return false;
   }
 
+  void setValue(T in_value, {
+    bool? hasModify,
+  }) {
+    _value = in_value;
+    if (null != hasModify) {
+      _hasNotify = hasModify;
+    }
+  }
+
   /// 写入新值，发送通知
   /// * [in_modify] 强制指定是否发生了改变
   void notify(

@@ -172,7 +172,7 @@ class LogxxRecord {
       "loggerName": loggerName,
       "time": time.millisecondsSinceEpoch,
       "sequenceNumber": sequenceNumber,
-      "content": message ?? convert.jsonEncode(content!),
+      "content": (null == content) ? convert.jsonEncode(content) : null,
     };
     return convert.jsonEncode(remap);
   }
@@ -182,7 +182,7 @@ class LogxxRecord {
       level: Level(json["levelName"] ?? "", json["levelValue"] ?? -777),
       message: json["message"] ?? "",
       time: DateTime.fromMillisecondsSinceEpoch(json["time"] ?? 0),
-      content: LogxxItem.fromJsonStr(json["content"] ?? ""),
+      content: LogxxItem.fromJsonStr(json["message"] ?? ""),
       loggerName: json["loggerName"] ?? "",
       sequenceNumber: json["sequenceNumber"] ?? -1,
     );
@@ -216,7 +216,6 @@ class LogxxRecord {
       "loggerName": loggerName,
       "time": time.millisecondsSinceEpoch,
       "sequenceNumber": sequenceNumber,
-      "content": convert.jsonEncode(content),
     };
     return remap;
   }

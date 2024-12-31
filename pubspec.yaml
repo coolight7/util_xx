@@ -1,6 +1,6 @@
 name: util_xx
 description: "节流、防抖、重复触发、限制单次触发、流"
-version: 0.2.2
+version: 0.2.3
 homepage: https://github.com/coolight7/util_xx
 
 environment:
