@@ -1,4 +1,4 @@
-library utilxx;
+library;
 
 export 'Eventxx.dart';
 export 'Loggerxx.dart';
