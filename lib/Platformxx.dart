@@ -42,10 +42,10 @@ class Platformxx_c {
       return Platformxx_c.IosStr;
     } else if (Platformxx_c.isWindows) {
       return Platformxx_c.WindowsStr;
-    } else if (Platformxx_c.isLinux) {
-      return Platformxx_c.LinuxStr;
     } else if (Platformxx_c.isMacOS) {
       return Platformxx_c.MacosStr;
+    } else if (Platformxx_c.isLinux) {
+      return Platformxx_c.LinuxStr;
     } else {
       // 错误
       return "";
