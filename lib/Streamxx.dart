@@ -72,7 +72,8 @@ class Streamxx_c<T> {
     return false;
   }
 
-  void setValue(T in_value, {
+  void setValue(
+    T in_value, {
     bool? hasModify,
   }) {
     _value = in_value;
@@ -173,5 +174,34 @@ class StreamxxListener_c<T> {
   /// * [false]移除失败
   bool? dispose() {
     return stream?.removeListener(this);
+  }
+}
+
+class Sourcexx_c<T> {
+  int _useId = 1;
+  final src = <int, T>{};
+
+  Sourcexx_c();
+
+  void foreach(void Function(int id, T item) func) {
+    src.forEach(func);
+  }
+
+  int add(T item) {
+    final id = _useId++;
+    src[id] = item;
+    return id;
+  }
+
+  T? remove(int? id) {
+    if (null == id) {
+      return null;
+    }
+    final item = src.remove(id);
+    return item;
+  }
+
+  void clear() {
+    src.clear();
   }
 }

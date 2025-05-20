@@ -147,6 +147,8 @@ class EventxxThrottle_c<T> extends EventxxBase_c<T> {
   bool _hasValue = false;
   late T _value;
 
+  T get value => _value;
+
   Timer? _timer;
 
   /// 间隔时间
