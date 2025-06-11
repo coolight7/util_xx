@@ -32,21 +32,34 @@ enum SeparatorxxType_e {
 class Parsexx_c {
   Parsexx_c._();
 
-  // 将List<dy> 转List<int>
-  static List<int> parseListDynamicToInt(List<dynamic> in_list) {
-    List<int> ids = [];
+  static List<T> parseListDynamicToT<T>(
+    List<dynamic> in_list,
+    T? Function(dynamic item)? onParse,
+  ) {
+    List<T> result = [];
     for (int i = 0; i < in_list.length; ++i) {
       final item = in_list[i];
-      if (item is int) {
-        ids.add(item);
-      } else {
-        final intItem = int.tryParse(item.toString());
-        if (null != intItem) {
-          ids.add(intItem);
+      if (item is T) {
+        result.add(item);
+      } else if (null != onParse) {
+        final test = onParse.call(item);
+        if (null != test) {
+          result.add(test);
         }
       }
     }
-    return ids;
+    return result;
+  }
+
+  // 将 List<dynamic> 转 List<int>
+  static List<int> parseListDynamicToInt(List<dynamic> in_list) {
+    return parseListDynamicToT(in_list, (item) {
+      if (item is String) {
+        return int.tryParse(item);
+      } else {
+        return int.tryParse(item.toString());
+      }
+    });
   }
 
   static List<int> parseListItemToInt<T>(
