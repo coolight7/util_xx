@@ -35,7 +35,7 @@ class Objxx_c<T> {
   static T1? autoFromJson<T1>(
     dynamic json,
     T1 Function(Map<String, dynamic>) fromJson,
-    T1 Function(String) fromJsonStr,
+    T1? Function(String) fromJsonStr,
   ) {
     if (json is String && json.isNotEmpty) {
       return fromJsonStr(json);
