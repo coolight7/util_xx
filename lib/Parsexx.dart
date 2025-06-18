@@ -208,8 +208,19 @@ class Parsexx_c {
     return restr;
   }
 
-  static String formatTimeToStr(DateTime time) {
-    return "${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}:${time.second.toString().padLeft(2, '0')}";
+  static String formatDateToStr(
+    DateTime time, {
+    bool subYear = false,
+    String separator = "/",
+  }) {
+    return "${subYear ? (time.year % 100) : time.year}$separator${time.month.toString().padLeft(2, '0')}$separator${time.day.toString().padLeft(2, '0')}";
+  }
+
+  static String formatTimeToStr(
+    DateTime time, {
+    String separator = ":",
+  }) {
+    return "${time.hour.toString().padLeft(2, '0')}$separator${time.minute.toString().padLeft(2, '0')}$separator${time.second.toString().padLeft(2, '0')}";
   }
 
   static String formatNumStr(int num) {
