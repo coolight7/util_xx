@@ -208,6 +208,10 @@ class Parsexx_c {
     return restr;
   }
 
+  static String formatIntPadLeft(int content, [int len = 2]) {
+    return content.toString().padLeft(len, '0');
+  }
+
   static String formatDateToStr(
     DateTime time, {
     bool subYear = false,
