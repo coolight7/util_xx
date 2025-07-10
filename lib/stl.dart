@@ -165,4 +165,23 @@ class AhoCorasick {
     }
     return matches;
   }
+
+  String removeAll(String text) {
+    final matches = search(text);
+    if (matches.isEmpty) return text;
+
+    // 按起始位置降序排列，确保删除操作不会影响后续匹配的位置
+    matches.sort((a, b) => b.startIndex - a.startIndex);
+
+    var result = text;
+    for (final match in matches) {
+      final pattern = _patterns[match.patternIndex];
+      final start = match.startIndex;
+      final end = start + pattern.length;
+
+      // 拼接删除匹配部分后的字符串
+      result = result.substring(0, start) + result.substring(end);
+    }
+    return result;
+  }
 }
