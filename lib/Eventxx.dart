@@ -380,6 +380,22 @@ class EventxxQueue_c<T, T1> {
     });
   }
 
+  Future<T?> onRunItem(EventxxQueueItem_c<T, T1> item) async {
+    try {
+      final reData = await item.fun.call(item.value);
+      if (false == item.result.isCompleted) {
+        item.result.complete(reData);
+      }
+      return reData;
+    } catch (e) {
+      item.result.complete(null);
+      if (Platformxx_c.isDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
   Future<void> onRunEvent() async {
     if (_isRunning) {
       return;
@@ -388,17 +404,7 @@ class EventxxQueue_c<T, T1> {
     _isRunning = true;
     while (list.isNotEmpty) {
       final item = list.first;
-      try {
-        final reData = await item.fun.call(item.value);
-        if (false == item.result.isCompleted) {
-          item.result.complete(reData);
-        }
-      } catch (e) {
-        item.result.complete(null);
-        if (Platformxx_c.isDebugMode) {
-          print(e);
-        }
-      }
+      await onRunItem(item);
       // 移除一个
       list.remove(item);
     }
@@ -407,7 +413,13 @@ class EventxxQueue_c<T, T1> {
   }
 
   /// 返回触发执行后的结果
-  Future<T?> notify(EventxxQueueItem_c<T, T1> item) {
+  Future<T?> notify(
+    EventxxQueueItem_c<T, T1> item, {
+    bool fastRun = false,
+  }) {
+    if (fastRun) {
+      return onRunItem(item);
+    }
     list.add(item);
     onRunEvent();
     return item.result.future;
