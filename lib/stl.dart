@@ -76,7 +76,7 @@ class AhoCorasick {
     _patterns.add(pattern);
     int current = 0;
 
-    for (final char in pattern.runes) {
+    for (final char in pattern.codeUnits) {
       // 如果当前节点没有该字符的子节点，则创建新节点
       if (!_nodes[current].children.containsKey(char)) {
         _nodes[current].children[char] = _nodes.length;
@@ -135,12 +135,9 @@ class AhoCorasick {
     final matches = <ACMatch>[];
     int current = 0;
 
-    // 使用runes处理Unicode字符
-    final runes = text.runes.toList();
-
-    for (var i = 0; i < runes.length; i++) {
-      final char = runes[i];
-
+    // 使用codeUnits处理Unicode字符
+    int index = 0;
+    for (final char in text.codeUnits) {
       // 跳转失败指针直到找到匹配或回到根节点
       while (current > 0 && !_nodes[current].children.containsKey(char)) {
         current = _nodes[current].fail;
@@ -155,13 +152,16 @@ class AhoCorasick {
 
       // 收集所有匹配的模式
       for (final patternId in _nodes[current].outputs) {
-        final patternLength = _patterns[patternId].runes.length;
-        final startIndex = i - patternLength + 1;
+        final patternLength = _patterns[patternId].codeUnits.length;
+        final startIndex = index - patternLength + 1;
         if (startIndex >= 0) {
           matches.add(ACMatch(startIndex, patternId));
-          if (onlyContains) return matches;
+          if (onlyContains) {
+            return matches;
+          }
         }
       }
+      ++index;
     }
     return matches;
   }
