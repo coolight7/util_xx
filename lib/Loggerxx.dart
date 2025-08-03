@@ -177,7 +177,7 @@ class LogxxRecord {
     return convert.jsonEncode(remap);
   }
 
-  factory LogxxRecord.fromJson(Map<String, dynamic> json) {
+  factory LogxxRecord.fromJson(Map json) {
     return LogxxRecord(
       level: Level(json["levelName"] ?? "", json["levelValue"] ?? -777),
       message: json["message"] ?? "",
