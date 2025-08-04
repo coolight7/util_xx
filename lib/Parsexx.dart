@@ -32,8 +32,32 @@ enum SeparatorxxType_e {
 class Parsexx_c {
   Parsexx_c._();
 
+  static List<T>? parseListToT<T, T1>(
+    dynamic in_list,
+    T? Function(dynamic item)? onParse,
+  ) {
+    try {
+      if (in_list is String) {
+        if (in_list.isEmpty) {
+          return null;
+        }
+        in_list = convert.jsonDecode(in_list);
+      }
+      if (in_list is! List) {
+        return null;
+      }
+      return parseListDynamicToT(in_list, onParse);
+    } catch (e) {
+      Loggerxx.to().severe(LogxxItem(
+        prefix: "Parsexx_c.parseListToT.json",
+        msg: [e.toString(), in_list],
+      ));
+    }
+    return null;
+  }
+
   static List<T> parseListDynamicToT<T>(
-    List<dynamic> in_list,
+    List in_list,
     T? Function(dynamic item)? onParse,
   ) {
     List<T> result = [];
@@ -92,7 +116,7 @@ class Parsexx_c {
       return Parsexx_c.parseListDynamicToInt(convert.jsonDecode(data));
     } catch (e) {
       Loggerxx.to().severe(LogxxItem(
-        prefix: "json 解析错误",
+        prefix: "Parsexx_c.tryParseStringToListInt",
         msg: [e.toString(), data],
       ));
       return null;
