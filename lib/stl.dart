@@ -62,8 +62,12 @@ class _TrieNode {
 class AhoCorasick {
   final List<_TrieNode> _nodes = [];
   final List<String> _patterns = [];
+  final bool caseInsensitive;
 
-  AhoCorasick(Iterable<String> patterns) {
+  AhoCorasick(
+    Iterable<String> patterns, {
+    this.caseInsensitive = false,
+  }) {
     _nodes.add(_TrieNode()); // 根节点
 
     for (final pattern in patterns) {
@@ -72,17 +76,31 @@ class AhoCorasick {
     build();
   }
 
+  int onCharCode(int char) {
+    if (caseInsensitive) {
+      // 转换为小写字母
+      if (char >= 65 && char <= 90) {
+        return char + 32;
+      }
+    }
+    return char;
+  }
+
   void addPattern(String pattern) {
+    if (caseInsensitive) {
+      pattern = pattern.toLowerCase();
+    }
     _patterns.add(pattern);
     int current = 0;
 
     for (final char in pattern.codeUnits) {
+      final useChar = onCharCode(char);
       // 如果当前节点没有该字符的子节点，则创建新节点
-      if (!_nodes[current].children.containsKey(char)) {
-        _nodes[current].children[char] = _nodes.length;
+      if (!_nodes[current].children.containsKey(useChar)) {
+        _nodes[current].children[useChar] = _nodes.length;
         _nodes.add(_TrieNode());
       }
-      current = _nodes[current].children[char]!;
+      current = _nodes[current].children[useChar]!;
     }
     _nodes[current].outputs.add(_patterns.length - 1);
   }
@@ -138,14 +156,15 @@ class AhoCorasick {
     // 使用codeUnits处理Unicode字符
     int index = 0;
     for (final char in text.codeUnits) {
+      final useChar = onCharCode(char);
       // 跳转失败指针直到找到匹配或回到根节点
-      while (current > 0 && !_nodes[current].children.containsKey(char)) {
+      while (current > 0 && !_nodes[current].children.containsKey(useChar)) {
         current = _nodes[current].fail;
       }
 
       // 移动到下一个节点
-      if (_nodes[current].children.containsKey(char)) {
-        current = _nodes[current].children[char]!;
+      if (_nodes[current].children.containsKey(useChar)) {
+        current = _nodes[current].children[useChar]!;
       } else {
         current = 0; // 没有匹配时回到根节点
       }
