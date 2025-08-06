@@ -27,7 +27,7 @@ class STLxx_c {
     return result;
   }
 
-  static IgnoreCaseSet createIgnoreCaseSet({Set<String>? data}) {
+  static IgnoreCaseSet createIgnoreCaseSet({Iterable<String>? data}) {
     final result = IgnoreCaseSet(
       equals: (p0, p1) {
         return StringUtilxx_c.isIgnoreCaseEqual(p0, p1);
@@ -66,7 +66,7 @@ class AhoCorasick {
 
   AhoCorasick(
     Iterable<String> patterns, {
-    this.caseInsensitive = false,
+    this.caseInsensitive = true,
   }) {
     _nodes.add(_TrieNode()); // 根节点
 

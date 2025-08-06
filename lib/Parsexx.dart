@@ -58,8 +58,25 @@ class Parsexx_c {
 
   static List<T> parseListDynamicToT<T>(
     List in_list,
-    T? Function(dynamic item)? onParse,
-  ) {
+    T? Function(dynamic item)? onParse, {
+    bool full = false,
+  }) {
+    if (full) {
+      return List<T>.generate(in_list.length, (i) {
+        final item = in_list[i];
+        if (item is T) {
+          return item;
+        } else if (null != onParse) {
+          final test = onParse.call(item);
+          if (null != test) {
+            return test;
+          }
+        }
+        assert(false);
+        throw Exception(
+            "parseListDynamicToT: Can't not full parse list item: $item");
+      });
+    }
     List<T> result = [];
     for (int i = 0; i < in_list.length; ++i) {
       final item = in_list[i];
