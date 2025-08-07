@@ -32,7 +32,7 @@ enum SeparatorxxType_e {
 class Parsexx_c {
   Parsexx_c._();
 
-  static List<T>? parseListToT<T, T1>(
+  static List<T>? parseListToT<T>(
     dynamic in_list,
     T? Function(dynamic item)? onParse,
   ) {
@@ -47,10 +47,10 @@ class Parsexx_c {
         return null;
       }
       return parseListDynamicToT(in_list, onParse);
-    } catch (e) {
+    } catch (e, stack) {
       Loggerxx.to().severe(LogxxItem(
         prefix: "Parsexx_c.parseListToT.json",
-        msg: [e.toString(), in_list],
+        msg: [e.toString(), stack.toString(), in_list.toString()],
       ));
     }
     return null;
