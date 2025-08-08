@@ -27,6 +27,21 @@ class STLxx_c {
     return result;
   }
 
+  static IgnoreCaseMap<List<String>> createIgnoreCaseMapValueKey(
+      Map<String, String> data) {
+    final result = createIgnoreCaseMap<List<String>>();
+    for (final item in data.entries) {
+      if (item.value.isNotEmpty) {
+        if (result.containsKey(item.value)) {
+          result[item.value]?.add(item.key);
+        } else {
+          result[item.value] = [item.key];
+        }
+      }
+    }
+    return result;
+  }
+
   static IgnoreCaseSet createIgnoreCaseSet({Iterable<String>? data}) {
     final result = IgnoreCaseSet(
       equals: (p0, p1) {
