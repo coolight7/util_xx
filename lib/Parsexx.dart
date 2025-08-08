@@ -217,36 +217,36 @@ class Parsexx_c {
         minutes = duration.inMinutes.toString().padLeft(2, '0');
         seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
     }
-    String restr = "";
+    final restr = StringBuffer();
     switch (separator) {
       case SeparatorxxType_e.Char:
         if (hours.isNotEmpty) {
-          restr += "$hours小时";
+          restr.write("$hours小时");
         }
         if (minutes.isNotEmpty) {
-          restr += "$minutes分钟";
+          restr.write("$minutes分钟");
         }
         if (seconds.isNotEmpty) {
-          restr += "$seconds秒";
+          restr.write("$seconds秒");
         }
       case SeparatorxxType_e.Symbol:
         if (hours.isNotEmpty) {
-          restr += hours;
+          restr.write(hours);
         }
         if (minutes.isNotEmpty) {
           if (restr.isNotEmpty) {
-            restr += ":";
+            restr.write(":");
           }
-          restr += minutes;
+          restr.write(minutes);
         }
         if (seconds.isNotEmpty) {
           if (restr.isNotEmpty) {
-            restr += ":";
+            restr.write(":");
           }
-          restr += seconds;
+          restr.write(seconds);
         }
     }
-    return restr;
+    return restr.toString();
   }
 
   static String formatIntPadLeft(int content, [int len = 2]) {

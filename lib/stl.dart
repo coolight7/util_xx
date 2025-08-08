@@ -215,11 +215,11 @@ class AhoCorasick {
       return (_patterns[a.patternIndex].length -
           _patterns[b.patternIndex].length);
     });
-    var result = "";
     int index = 0;
+    var result = StringBuffer();
     for (final match in matches) {
       if (match.startIndex > index) {
-        result += text.substring(index, match.startIndex);
+        result.write(text.substring(index, match.startIndex));
       }
       final end = match.startIndex + _patterns[match.patternIndex].length;
       if (end > index) {
@@ -227,9 +227,9 @@ class AhoCorasick {
       }
     }
     if (index < text.length) {
-      result += text.substring(index);
+      result.write(text.substring(index));
     }
 
-    return result;
+    return result.toString();
   }
 }
