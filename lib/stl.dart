@@ -75,12 +75,43 @@ class _TrieNode {
 }
 
 class AhoCorasick {
+  static const caseShiftSheet = <int, int>{
+    65: 97,
+    66: 98,
+    67: 99,
+    68: 100,
+    69: 101,
+    70: 102,
+    71: 103,
+    72: 104,
+    73: 105,
+    74: 106,
+    75: 107,
+    76: 108,
+    77: 109,
+    78: 110,
+    79: 111,
+    80: 112,
+    81: 113,
+    82: 114,
+    83: 115,
+    84: 116,
+    85: 117,
+    86: 118,
+    87: 119,
+    88: 120,
+    89: 121,
+    90: 122,
+  };
+
   final List<_TrieNode> _nodes = [];
   final List<String> _patterns = [];
+  final Map<int, int>? shiftSheet;
   final bool caseInsensitive;
 
   AhoCorasick(
     Iterable<String> patterns, {
+    this.shiftSheet,
     this.caseInsensitive = true,
   }) {
     _nodes.add(_TrieNode()); // 根节点
@@ -94,11 +125,12 @@ class AhoCorasick {
   int onCharCode(int char) {
     if (caseInsensitive) {
       // 转换为小写字母
-      if (char >= 65 && char <= 90) {
-        return char + 32;
+      final result = caseShiftSheet[char];
+      if (null != result) {
+        return result;
       }
     }
-    return char;
+    return shiftSheet?[char] ?? char;
   }
 
   void addPattern(String pattern) {
