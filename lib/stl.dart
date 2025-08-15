@@ -134,9 +134,6 @@ class AhoCorasick {
   }
 
   void addPattern(String pattern) {
-    if (caseInsensitive) {
-      pattern = pattern.toLowerCase();
-    }
     _patterns.add(pattern);
     int current = 0;
 
