@@ -262,3 +262,34 @@ class AhoCorasick {
     return result.toString();
   }
 }
+
+class LruCachexx_c<TKey, TValue> {
+  final int maxSize;
+  late Map<TKey, TValue> data;
+
+  LruCachexx_c(
+    this.maxSize, {
+    Map<TKey, TValue>? data,
+  }) {
+    this.data = data ?? <TKey, TValue>{};
+  }
+
+  TValue? operator [](Object? key) {
+    return data[key];
+  }
+
+  /// Associates the [key] with the given [value].
+  ///
+  /// If the key was already in the map, its associated value is changed.
+  /// Otherwise the key/value pair is added to the map.
+  void operator []=(TKey key, TValue value) {
+    data.removeWhere(
+      (key, value) => (data.length > (maxSize ~/ 2)),
+    );
+    data[key] = value;
+  }
+
+  void clear() {
+    data.clear();
+  }
+}
