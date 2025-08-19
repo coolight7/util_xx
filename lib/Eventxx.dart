@@ -387,10 +387,11 @@ class EventxxQueue_c<T, T1> {
         item.result.complete(reData);
       }
       return reData;
-    } catch (e) {
+    } catch (e, stack) {
       item.result.complete(null);
       if (Platformxx_c.isDebugMode) {
         print(e);
+        print(stack);
       }
     }
     return null;
