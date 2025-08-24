@@ -40,6 +40,10 @@ class Streamxx_c<T> {
     }
   }
 
+  void clearListener() {
+    _listeners.clear();
+  }
+
   StreamxxListener_c<T> addListener(
     void Function(T value, bool? hasModify) onActive, {
     bool Function(T oldData, T newData)? hasModify,
