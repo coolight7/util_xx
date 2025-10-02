@@ -11,9 +11,7 @@ class STLxx_c {
 
   static IgnoreCaseMap<T> createIgnoreCaseMap<T>({Map<String, T>? data}) {
     final result = IgnoreCaseMap<T>(
-      equals: (p0, p1) {
-        return StringUtilxx_c.isIgnoreCaseEqual(p0, p1);
-      },
+      equals: StringUtilxx_c.isIgnoreCaseEqual,
       hashCode: (p0) {
         return p0.toLowerCase().hashCode;
       },
@@ -44,9 +42,7 @@ class STLxx_c {
 
   static IgnoreCaseSet createIgnoreCaseSet({Iterable<String>? data}) {
     final result = IgnoreCaseSet(
-      equals: (p0, p1) {
-        return StringUtilxx_c.isIgnoreCaseEqual(p0, p1);
-      },
+      equals: StringUtilxx_c.isIgnoreCaseEqual,
       hashCode: (p0) {
         return p0.toLowerCase().hashCode;
       },
