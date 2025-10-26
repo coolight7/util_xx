@@ -28,4 +28,17 @@ class Httpxx_c {
     toHeaders.addAll(fromHeaders);
     return toHeaders;
   }
+
+  static String? toHeaderStr(HttpHeaderAnyxx? header) {
+    if (true != header?.isNotEmpty) {
+      return null;
+    }
+    final list = header!.entries;
+    final restr = StringBuffer();
+    for (final item in list) {
+      restr.write("${item.key}: ${item.value}");
+      restr.write("\r\n");
+    }
+    return restr.toString();
+  }
 }
