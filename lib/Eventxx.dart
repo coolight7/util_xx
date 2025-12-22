@@ -301,10 +301,11 @@ class EventxxLine_c<T> {
   final list = Queue<T>();
 
   /// 当任务来临时执行的操作
-  /// * 返回值 <bool>
-  ///   * [true]，执行完当前函数后清空事件 [list]
-  ///   * [false]，执行完后只清理被用于执行的值 [list.first]
+  /// - 每次执行前，取出[list]第一个值作为[onListen]的参数
+  /// - 返回值
+  ///   - [true]，执行完当前函数后清空事件 [list]
   final Future<bool> Function(T value) onListen;
+  final Duration? timeout;
 
   /// 标记是否正在执行
   bool _isRunning = false;
@@ -313,6 +314,7 @@ class EventxxLine_c<T> {
   /// ## 线性任务队列
   EventxxLine_c({
     required this.onListen,
+    this.timeout,
   });
 
   Future<bool> onRunEvent() async {
@@ -320,20 +322,23 @@ class EventxxLine_c<T> {
       return false;
     }
     _isRunning = true;
-    try {
-      while (list.isNotEmpty) {
-        final rebool = await onListen.call(list.first);
-        if (rebool) {
+    while (list.isNotEmpty) {
+      try {
+        // 移除一个
+        final current = list.removeFirst();
+        var rebool = onListen.call(current);
+        if (null != timeout) {
+          // 超时，移除当前
+          rebool = rebool.timeout(timeout!, onTimeout: () => false);
+        }
+        if (await rebool) {
           // 清空
           list.clear();
-        } else {
-          // 移除一个
-          list.removeFirst();
         }
-      }
-    } catch (e) {
-      if (Platformxx_c.isDebugMode) {
-        print(e);
+      } catch (e) {
+        if (Platformxx_c.isDebugMode) {
+          print(e);
+        }
       }
     }
     _isRunning = false;
