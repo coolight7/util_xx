@@ -226,7 +226,7 @@ class AhoCorasick {
   }
 
   String removeAll(String text) {
-    final matches = search(text);
+    final matches = search(text, onlyContains: false);
     if (matches.isEmpty) {
       return text;
     }
