@@ -58,10 +58,29 @@ class STLxx_c {
 }
 
 class ACMatch {
-  final int startIndex;
+  final int start;
+  final int end;
   final int patternIndex;
 
-  ACMatch(this.startIndex, this.patternIndex);
+  const ACMatch(
+    this.start,
+    this.end,
+    this.patternIndex,
+  );
+
+  static int cDefCompare(final ACMatch left, final ACMatch right) {
+    if (left.start != right.start) {
+      return left.start - right.start;
+    }
+    return right.end - left.end;
+  }
+
+  bool operator <(final ACMatch other) {
+    if (start != other.start) {
+      return start < other.start;
+    }
+    return other.end < end;
+  }
 }
 
 class _TrieNode {
@@ -214,7 +233,7 @@ class AhoCorasick {
         final patternLength = _patterns[patternId].codeUnits.length;
         final startIndex = index - patternLength + 1;
         if (startIndex >= 0) {
-          matches.add(ACMatch(startIndex, patternId));
+          matches.add(ACMatch(startIndex, index + 1, patternId));
           if (onlyContains) {
             return matches;
           }
@@ -222,7 +241,27 @@ class AhoCorasick {
       }
       ++index;
     }
-    return matches;
+    if (matches.isEmpty) {
+      return matches;
+    }
+
+    // 升序排列
+    matches.sort(ACMatch.cDefCompare);
+
+    final result = <ACMatch>[];
+    int lastEnd = -1;
+    for (final match in matches) {
+      if (match.start >= lastEnd) {
+        // 这是一个新的非重叠匹配
+        result.add(match);
+        lastEnd = match.end;
+      }
+      // 如果match.start < lastEnd，说明这个匹配与之前的重叠
+      // 由于我们已按结束位置降序排序，之前保留的是更长的匹配
+      // 所以跳过这个较短的匹配
+    }
+
+    return result;
   }
 
   String removeAll(String text) {
@@ -231,22 +270,13 @@ class AhoCorasick {
       return text;
     }
 
-    // 升序排列
-    matches.sort((a, b) {
-      final subIndex = a.startIndex - b.startIndex;
-      if (subIndex != 0) {
-        return subIndex;
-      }
-      return (_patterns[a.patternIndex].length -
-          _patterns[b.patternIndex].length);
-    });
     int index = 0;
     var result = StringBuffer();
     for (final match in matches) {
-      if (match.startIndex > index) {
-        result.write(text.substring(index, match.startIndex));
+      if (match.start > index) {
+        result.write(text.substring(index, match.start));
       }
-      final end = match.startIndex + _patterns[match.patternIndex].length;
+      final end = match.end;
       if (end > index) {
         index = end;
       }
