@@ -27,9 +27,9 @@ abstract class EventxxBase_c<T> {
 }
 
 class EventxxControl_c {
-  /// * 检查[future]的执行是否超时
+  /// - 检查[future]的执行是否超时
   /// 该函数只会在[future]完成后才会调用[onDone]并返回结果
-  /// * 注意，部分阻塞会导致[startTime]和[endTime]在[future]一段时间后返回后仍然相等，
+  /// - 注意，部分阻塞会导致[startTime]和[endTime]在[future]一段时间后返回后仍然相等，
   /// 导致[isTimeOut]永远为[false]。例如win端调用系统选择文件夹路径接口
   static Future<T?> checkTimeOut<T>(
     Future<T> future,
@@ -66,7 +66,7 @@ class EventxxDebounce_c<T> extends EventxxBase_c<T> {
   final void Function(T val) onListen;
 
   /// ## 防抖
-  /// * 限制在 [time] 时间内没有新收到新数据后触发执行一次 [onListen]
+  /// - 限制在 [time] 时间内没有新收到新数据后触发执行一次 [onListen]
   EventxxDebounce_c({
     required this.time,
     required this.onListen,
@@ -120,8 +120,8 @@ class EventxxDebounceThrottle_c<T> extends EventxxThrottle_c<T> {
   late final EventxxDebounce_c<T> debounce;
 
   /// ## 节流版防抖
-  /// * 当[debounceTime]时间内没有新通知[notify]后，才会触发[onListen]
-  /// * 并且限制调用[notify]的频率在[time]时间内只会触发一次
+  /// - [onListen] 限制频率，在[time]时间内只会触发一次
+  /// - [onDebounceListen] 当[debounceTime]时间内没有新通知[notify]后，才会触发
   EventxxDebounceThrottle_c({
     required Duration debounceTime,
     required super.time,
@@ -164,11 +164,11 @@ class EventxxThrottle_c<T> extends EventxxBase_c<T> {
   final bool dofastFirstRunEnd;
 
   /// ## 节流
-  /// * 限制在 [time] 时间内只执行一次 [onListen]。
-  /// * 默认情况下会等待限制期后取最后一次通知的[_value]触发一次[onListen]，之前的[_value]
-  /// 都将被丢弃。
-  /// * [fastFirstRun] 若为[true]，当未限流时得到通知马上触发[onListen], 之后限制期间的[_value]都会
-  /// 被丢弃；若启用[dofastFirstRunEnd]，则保留最后一个[_value]在限制结束时触发[onListen]，而后再次进入限流。
+  /// - 限制在 [time] 时间内只执行一次 [onListen]。
+  /// - 默认情况下会等待限制期后取最后一次通知的[_value]触发一次[onListen]，之前的[_value]
+  ///   都将被丢弃。
+  /// - [fastFirstRun] 若为[true]，当未限流时得到通知马上触发[onListen], 之后限制期间的[_value]都会
+  ///   被丢弃；若启用[dofastFirstRunEnd]，则保留最后一个[_value]在限制结束时触发[onListen]，而后再次进入限流。
   EventxxThrottle_c({
     required this.time,
     required this.onListen,
@@ -188,8 +188,8 @@ class EventxxThrottle_c<T> extends EventxxBase_c<T> {
     _timer = null;
   }
 
-  /// 通知值
-  /// * 返回是否触发执行
+  /// ## 通知值
+  /// - 返回是否触发执行
   @override
   bool notify(T in_value) {
     _value = in_value;
@@ -242,7 +242,7 @@ class EventxxRepeat_c {
   Timer? timer;
 
   /// ## 重复时触发
-  /// * 仅当一段时间[duration]内重复通知多次达到[repeatLimitNum]时才会触发执行[onListen]
+  /// - 仅当一段时间[duration]内重复通知多次达到[repeatLimitNum]时才会触发执行[onListen]
   EventxxRepeat_c({
     this.repeatLimitNum = 2,
     required this.duration,
@@ -283,7 +283,7 @@ class EventxxOnce_c {
   });
 
   /// 通知
-  /// * 返回是否允许执行
+  /// - 返回是否允许执行
   bool notify() {
     if (_hasRun) {
       // 已经执行过
