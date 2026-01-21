@@ -109,6 +109,7 @@ class Utilxx_c {
     }
   }
 
+  /// 检查是否符合 url，且含有 scheme
   static Uri? tryParseFullUri(String in_url) {
     final url = Uri.tryParse(in_url);
     if (null != url) {
