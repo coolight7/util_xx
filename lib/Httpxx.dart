@@ -15,6 +15,14 @@ class Httpxx_c {
     return STLxx_c.createIgnoreCaseMap<String>(data: data);
   }
 
+  static HttpHeaderxx createHeaderFromDynamic({
+    Map<String, dynamic>? anyData,
+  }) {
+    return STLxx_c.createIgnoreCaseMap<String>(data: anyData?.map((k, v) {
+      return MapEntry(k, v.toString());
+    }));
+  }
+
   static HttpFullHeaderxx createFullHeader({
     HttpFullHeaderAnyxx? data,
   }) {
