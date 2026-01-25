@@ -2,6 +2,7 @@ name: util_xx
 description: "节流、防抖、重复触发、限制单次触发、流"
 version: 0.2.3
 homepage: https://github.com/coolight7/util_xx
+publish_to: none
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -9,6 +10,7 @@ environment:
 dependencies:
   logging: ^1.2.0 # 日志
   string_util_xx:
+    path: ../string_util_xx
 
 dev_dependencies:
   test:

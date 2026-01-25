@@ -49,4 +49,8 @@ class Httpxx_c {
     }
     return restr.toString();
   }
+
+  static bool statusCodeIsSuccess(int? code) {
+    return (code != null && code ~/ 100 == 2);
+  }
 }
