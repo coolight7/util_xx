@@ -1,3 +1,4 @@
+import 'package:string_util_xx/StringUtilxx.dart';
 import 'package:util_xx/stl.dart';
 
 typedef HttpHeaderxx = IgnoreCaseMap<String>;
@@ -50,7 +51,21 @@ class Httpxx_c {
     return restr.toString();
   }
 
-  static bool statusCodeIsSuccess(int? code) {
-    return (code != null && code ~/ 100 == 2);
+  static bool respIsSuccess(
+    int? code, {
+    String? message,
+    bool allow3xx = false,
+  }) {
+    final c = (code != null) ? code ~/ 100 : null;
+    if (c == 2) {
+      return true;
+    }
+    if (allow3xx && c == 3) {
+      return true;
+    }
+    if (null != message) {
+      return (StringUtilxx_c.isIgnoreCaseEqual(message, "ok"));
+    }
+    return false;
   }
 }
