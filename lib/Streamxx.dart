@@ -116,10 +116,10 @@ class Streamxx_c<T> {
           _value,
           itemNotify,
         );
-      } catch (e) {
+      } catch (e, stack) {
         Loggerxx.to().severe(LogxxItem(
           prefix: "MyStream.notify Error",
-          msg: [e.toString()],
+          msg: [e.toString(), stack.toString()],
         ));
       }
     }
