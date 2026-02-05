@@ -66,6 +66,22 @@ class Loggerxx {
   void finest(LogxxItem msg) {
     _log.finest(convert.jsonEncode(msg));
   }
+
+  void defSevere(
+    String title, {
+    List<String>? msg,
+    Object? e,
+    Object? stack,
+  }) {
+    severe(LogxxItem(
+      prefix: title,
+      msg: [
+        ...?msg,
+        e?.toString() ?? "",
+        (stack ?? StackTrace.current).toString()
+      ],
+    ));
+  }
 }
 
 class LogxxItem {

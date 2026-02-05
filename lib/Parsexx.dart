@@ -56,6 +56,17 @@ class Parsexx_c {
     return null;
   }
 
+  static List<T>? tryParseListDynamicToT<T>(
+    List? in_list,
+    T? Function(dynamic item)? onParse, {
+    bool full = false,
+  }) {
+    if (null == in_list) {
+      return null;
+    }
+    return parseListDynamicToT(in_list, onParse, full: full);
+  }
+
   static List<T> parseListDynamicToT<T>(
     List in_list,
     T? Function(dynamic item)? onParse, {
