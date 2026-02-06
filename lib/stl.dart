@@ -264,6 +264,10 @@ class AhoCorasick {
     return result;
   }
 
+  bool contains(String text) {
+    return search(text, onlyContains: true).isNotEmpty;
+  }
+
   String removeAll(String text) {
     final matches = search(text, onlyContains: false);
     if (matches.isEmpty) {
