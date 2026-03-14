@@ -313,7 +313,10 @@ class Parsexx_c {
     int position = 2,
     int scale = 1024,
     int specified = -1,
+    List<String> sizeUnit = const ["B", "KB", "MB", "GB", "TB", "PB"],
   }) {
+    assert(sizeUnit.length == 6);
+
     ///格式化数字 如果小数后面为0则不显示小数点
     ///[num]要格式化的数字 double 类型
     /// [position] 保留几位小数 int类型
@@ -339,7 +342,6 @@ class Parsexx_c {
     }
 
     double num = fileSize.toDouble();
-    List sizeUnit = ["B", "KB", "MB", "GB", "TB", "PB"];
     // if (fileSize is String) {
     //   num = double.parse(fileSize);
     // } else if (fileSize is int || fileSize is double) {
