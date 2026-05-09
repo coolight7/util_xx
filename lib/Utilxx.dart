@@ -62,11 +62,33 @@ class Objxx_c<T> {
   }
 }
 
+abstract interface class XXEnumBase_e {
+  int get value;
+  String get label;
+  String? get depict;
+
+  static Map<int, T> createValueMap<T extends XXEnumBase_e>(List<T> list) {
+    return {for (final e in list) e.value: e};
+  }
+
+  static String toLabel(XXEnumBase_e type) {
+    return type.label;
+  }
+
+  static String? toDepict(XXEnumBase_e? type) {
+    return type?.depict;
+  }
+
+  static int? toInt(XXEnumBase_e? type) {
+    return type?.value;
+  }
+}
+
 class Utilxx_c {
   static final random = math.Random();
 
   static void defEmptyFunction_0() {}
-  static void defEmptyFunction_1(_) {}
+  static void defEmptyFunction_1(Object _) {}
 
   /// 二路归并
   /// * [fun] 返回 > 0 则代表 [left] 和 [right] 应当交换位置
