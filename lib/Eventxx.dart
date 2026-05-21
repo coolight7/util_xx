@@ -19,7 +19,7 @@ abstract class EventxxBase_c<T> {
       _onListenBind(in_value);
     } catch (e) {
       Loggerxx.to().severe(LogxxItem(
-        prefix: "MyEvent.run Error",
+        prefix: "Eventxx.run Error",
         msg: [e.toString()],
       ));
     }
@@ -73,7 +73,7 @@ class EventxxDebounce_c<T> extends EventxxBase_c<T> {
     this.fastFirstRun = false,
   });
 
-  EventxxDebounce_c.fromMyStream({
+  EventxxDebounce_c.fromStreamxx({
     required Streamxx_c<T> stream,
     required this.time,
     required this.onListen,

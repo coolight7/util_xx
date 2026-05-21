@@ -12,7 +12,7 @@ class Streamxx_c<T> {
 
   bool get hasNotify => _hasNotify;
   T get value => _value;
-  set value(in_value) => notify(in_value);
+  set value(T in_value) => notify(in_value);
 
   final bool checkModify;
 
