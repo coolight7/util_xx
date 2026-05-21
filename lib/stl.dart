@@ -138,6 +138,11 @@ class AhoCorasick {
   }
 
   int onCharCode(int char) {
+    final shift = shiftSheet?[char];
+    if (null != shift) {
+      char = shift;
+    }
+
     if (caseInsensitive) {
       // 转换为小写字母
       final result = caseShiftSheet[char];
@@ -145,7 +150,7 @@ class AhoCorasick {
         return result;
       }
     }
-    return shiftSheet?[char] ?? char;
+    return char;
   }
 
   void addPattern(String pattern) {
