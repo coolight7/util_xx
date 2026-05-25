@@ -82,6 +82,10 @@ abstract interface class XXEnumBase_e {
   static int? toInt(XXEnumBase_e? type) {
     return type?.value;
   }
+
+  static int mustToInt(XXEnumBase_e type) {
+    return type.value;
+  }
 }
 
 class Utilxx_c {
