@@ -85,8 +85,8 @@ class ACMatch {
 
 class _TrieNode {
   final Map<int, int> children = {}; // 使用Map支持Unicode
-  int fail = -1;
   final List<int> outputs = [];
+  int fail = -1;
 }
 
 class AhoCorasick {
@@ -213,14 +213,18 @@ class AhoCorasick {
     }
   }
 
-  List<ACMatch> search(String text, {bool onlyContains = false}) {
+  List<ACMatch> search(
+    String text, {
+    int start = 0,
+    bool onlyContains = false,
+  }) {
     final matches = <ACMatch>[];
     int current = 0;
 
     // 使用codeUnits处理Unicode字符
-    int index = 0;
-    for (final char in text.codeUnits) {
-      final useChar = onCharCode(char);
+    final codeUnits = text.codeUnits;
+    for (int index = start; index < codeUnits.length; ++index) {
+      final useChar = onCharCode(codeUnits[index]);
       // 跳转失败指针直到找到匹配或回到根节点
       while (current > 0 && !_nodes[current].children.containsKey(useChar)) {
         current = _nodes[current].fail;
@@ -244,7 +248,6 @@ class AhoCorasick {
           }
         }
       }
-      ++index;
     }
     if (matches.isEmpty) {
       return matches;
@@ -269,12 +272,12 @@ class AhoCorasick {
     return result;
   }
 
-  bool contains(String text) {
-    return search(text, onlyContains: true).isNotEmpty;
+  bool contains(String text, {int start = 0}) {
+    return search(text, start: start, onlyContains: true).isNotEmpty;
   }
 
-  String removeAll(String text) {
-    final matches = search(text, onlyContains: false);
+  String removeAll(String text, {int start = 0}) {
+    final matches = search(text, start: start, onlyContains: false);
     if (matches.isEmpty) {
       return text;
     }
