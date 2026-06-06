@@ -93,7 +93,7 @@ class LogxxItem {
     this.msg,
   });
 
-  factory LogxxItem.fromJson(Map<String, dynamic> json) {
+  factory LogxxItem.fromJson(Map json) {
     final List? list = json["msg"];
     List<String>? msgs;
     if (null != list) {
