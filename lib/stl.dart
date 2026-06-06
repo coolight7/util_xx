@@ -321,9 +321,11 @@ class LruCachexx_c<TKey, TValue> {
   /// If the key was already in the map, its associated value is changed.
   /// Otherwise the key/value pair is added to the map.
   void operator []=(TKey key, TValue value) {
-    data.removeWhere(
-      (key, value) => (data.length > (maxSize ~/ 2)),
-    );
+    if (data.length >= maxSize) {
+      data.removeWhere(
+        (key, value) => (data.length > (maxSize ~/ 2)),
+      );
+    }
     data[key] = value;
   }
 
