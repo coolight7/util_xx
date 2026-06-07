@@ -64,7 +64,7 @@ class Httpxx_c {
       return true;
     }
     if (null != message) {
-      return (StringUtilxx_c.isIgnoreCaseEqual(message, "ok"));
+      return StringUtilxx_c.isIgnoreCaseEqual(message, "ok");
     }
     return false;
   }
